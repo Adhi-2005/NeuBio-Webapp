@@ -5,10 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { insertUserSchema, type InsertUser } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { Heart, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/lib/auth-context";
@@ -52,70 +51,26 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Heart className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <CardTitle className="text-3xl font-semibold">Create Your Account</CardTitle>
-            <CardDescription className="text-base mt-2">
-              Start your hearing journey with HearTrack
-            </CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>First Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="John"
-                          data-testid="input-firstName"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Last Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Doe"
-                          data-testid="input-lastName"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+    <div className="min-h-screen bg-background flex flex-col max-w-md mx-auto p-6">
+      <div className="flex-1 flex flex-col justify-center space-y-8">
+        <div className="text-center space-y-2">
+          <h1 className="text-4xl font-black uppercase tracking-tight">Create Account</h1>
+          <p className="text-muted-foreground font-medium">Start your journey with us</p>
+        </div>
 
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        type="email"
-                        placeholder="your.email@example.com"
-                        data-testid="input-email"
+                        placeholder="First Name"
+                        className="h-12 rounded-xl bg-muted/50 border-0"
+                        data-testid="input-firstName"
                         {...field}
                       />
                     </FormControl>
@@ -123,18 +78,16 @@ export default function Register() {
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
-                name="password"
+                name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
-                        type="password"
-                        placeholder="••••••••"
-                        data-testid="input-password"
+                        placeholder="Last Name"
+                        className="h-12 rounded-xl bg-muted/50 border-0"
+                        data-testid="input-lastName"
                         {...field}
                       />
                     </FormControl>
@@ -142,98 +95,134 @@ export default function Register() {
                   </FormItem>
                 )}
               />
+            </div>
 
-              <FormField
-                control={form.control}
-                name="retypePassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Retype Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="••••••••"
-                        data-testid="input-retypePassword"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="pt-4">
-                <Separator className="mb-4" />
-                <p className="text-sm text-muted-foreground mb-4">
-                  Optional: Guardian Information
-                </p>
-              </div>
-
-              <FormField
-                control={form.control}
-                name="guardianName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Guardian Name (Optional)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Guardian's full name"
-                        data-testid="input-guardianName"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="guardianPhone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Guardian Phone (Optional)</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="tel"
-                        placeholder="+1 (555) 000-0000"
-                        data-testid="input-guardianPhone"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {error && (
-                <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
-                  {error}
-                </div>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      className="h-12 rounded-xl bg-muted/50 border-0"
+                      data-testid="input-email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
+            />
 
-              <Button
-                type="submit"
-                className="w-full h-12"
-                disabled={form.formState.isSubmitting}
-                data-testid="button-register"
-              >
-                {form.formState.isSubmitting ? "Creating Account..." : "Create Account"}
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      className="h-12 rounded-xl bg-muted/50 border-0"
+                      data-testid="input-password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="text-center text-sm">
-                <span className="text-muted-foreground">Already have an account? </span>
-                <Link href="/login">
-                  <a className="text-primary font-medium hover:underline" data-testid="link-login">
-                    Sign In
-                  </a>
-                </Link>
+            <FormField
+              control={form.control}
+              name="retypePassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Retype Password"
+                      className="h-12 rounded-xl bg-muted/50 border-0"
+                      data-testid="input-retypePassword"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="pt-4">
+              <Separator className="mb-4" />
+              <p className="text-sm text-muted-foreground mb-4 font-medium">
+                Optional: Guardian Information
+              </p>
+            </div>
+
+            <FormField
+              control={form.control}
+              name="guardianName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Guardian's Name"
+                      className="h-12 rounded-xl bg-muted/50 border-0"
+                      data-testid="input-guardianName"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="guardianPhone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      type="tel"
+                      placeholder="Guardian's Phone"
+                      className="h-12 rounded-xl bg-muted/50 border-0"
+                      data-testid="input-guardianPhone"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {error && (
+              <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm font-medium text-center">
+                {error}
               </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+            )}
+
+            <Button
+              type="submit"
+              className="w-full h-14 rounded-full text-lg font-bold uppercase tracking-wide mt-4"
+              disabled={form.formState.isSubmitting}
+              data-testid="button-register"
+            >
+              {form.formState.isSubmitting ? "Creating..." : "Create Account"}
+            </Button>
+
+            <div className="text-center mt-4">
+              <Link href="/login">
+                <a className="text-muted-foreground hover:text-foreground font-medium" data-testid="link-login">
+                  Already have an account? Sign In
+                </a>
+              </Link>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Circle, Dot, Info, FileText, HelpCircle, Upload } from "lucide-react";
+import { CheckCircle2, Circle, Dot, Info, FileText, HelpCircle, Upload, ArrowLeft, ArrowRight } from "lucide-react";
 import BeneficiaryForm from "./beneficiary-form";
 import Questionnaire from "./questionnaire";
 import Documents from "./documents";
@@ -28,69 +28,58 @@ export default function Onboarding() {
     }
   };
 
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="container mx-auto p-4 max-w-3xl">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-center">Welcome to the Application Process</CardTitle>
-                <CardDescription className="text-center">
-                  Please review the steps below to understand what is required to complete your application.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid gap-6 md:grid-cols-3">
-                  <Card className="border-none shadow-none bg-muted/30">
-                    <CardHeader className="text-center pb-2">
-                      <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-                        <FileText className="w-6 h-6 text-blue-600" />
-                      </div>
-                      <CardTitle className="text-lg">1. Beneficiary Profile</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center text-sm text-muted-foreground">
-                      Provide basic information about the beneficiary (child) and the insured family member.
-                    </CardContent>
-                  </Card>
+          <div className="flex flex-col h-full justify-between">
+            <div className="space-y-8 text-center mt-8">
+              <h1 className="text-4xl font-black uppercase tracking-tight">
+                We Make Your<br />Life Easier
+              </h1>
+              
+              <div className="flex justify-center -space-x-4 py-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-16 h-16 rounded-full border-4 border-background bg-muted overflow-hidden">
+                    <img 
+                      src={`https://i.pravatar.cc/150?img=${i + 10}`} 
+                      alt="User" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
 
-                  <Card className="border-none shadow-none bg-muted/30">
-                    <CardHeader className="text-center pb-2">
-                      <div className="mx-auto w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
-                        <HelpCircle className="w-6 h-6 text-purple-600" />
-                      </div>
-                      <CardTitle className="text-lg">2. Questionnaire</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center text-sm text-muted-foreground">
-                      Answer a series of questions to help us understand your readiness and commitment.
-                    </CardContent>
-                  </Card>
+              <div className="space-y-4 max-w-xs mx-auto">
+                <p className="text-muted-foreground font-medium">
+                  Join thousands of families who have successfully navigated their hearing journey with us.
+                </p>
+              </div>
+            </div>
 
-                  <Card className="border-none shadow-none bg-muted/30">
-                    <CardHeader className="text-center pb-2">
-                      <div className="mx-auto w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
-                        <Upload className="w-6 h-6 text-orange-600" />
-                      </div>
-                      <CardTitle className="text-lg">3. Documents</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center text-sm text-muted-foreground">
-                      Upload necessary documents such as identification and medical records.
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="bg-blue-50 p-4 rounded-lg flex gap-3 items-start">
-                  <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-blue-800">
-                    You can save your progress at any time and return later. Please ensure all information provided is accurate.
-                  </p>
-                </div>
-
-                <Button size="lg" className="w-full" onClick={handleNext}>
-                  Start Application
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="flex gap-4 mt-auto pt-8">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="rounded-full h-14 w-14 shrink-0 border-2"
+                onClick={handleBack}
+                disabled={currentStep === 1}
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </Button>
+              <Button 
+                className="flex-1 rounded-full h-14 text-lg font-bold uppercase tracking-wide"
+                onClick={handleNext}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         );
       case 2:
@@ -101,38 +90,52 @@ export default function Onboarding() {
         return <Documents onNext={handleNext} />;
       case 5:
         return (
-          <div className="container mx-auto p-4 max-w-2xl text-center">
-            <Card>
-              <CardHeader>
-                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle2 className="w-8 h-8 text-green-600" />
+          <div className="flex flex-col h-full justify-between">
+            <div className="space-y-8 text-center mt-8">
+              <h1 className="text-4xl font-black uppercase tracking-tight">
+                Ready to<br />Submit?
+              </h1>
+              
+              <div className="space-y-4">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4 p-4 rounded-full bg-muted/50 border-2 border-transparent hover:border-primary/20 transition-all">
+                    <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <span className="font-bold text-lg uppercase tracking-wide">Beneficiary Profile</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-4 rounded-full bg-muted/50 border-2 border-transparent hover:border-primary/20 transition-all">
+                    <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <span className="font-bold text-lg uppercase tracking-wide">Questionnaire</span>
+                  </div>
+                  <div className="flex items-center gap-4 p-4 rounded-full bg-muted/50 border-2 border-transparent hover:border-primary/20 transition-all">
+                    <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <span className="font-bold text-lg uppercase tracking-wide">Documents</span>
+                  </div>
                 </div>
-                <CardTitle className="text-2xl">Ready to Submit?</CardTitle>
-                <CardDescription>
-                  You have completed all the required steps. Please review your information before final submission.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="bg-muted/30 p-4 rounded-lg text-left space-y-2">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    <span className="font-medium">Beneficiary Profile Completed</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    <span className="font-medium">Questionnaire Answered</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-600" />
-                    <span className="font-medium">Documents Uploaded</span>
-                  </div>
-                </div>
-                
-                <Button size="lg" className="w-full" onClick={handleNext}>
-                  Submit Application
-                </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+
+            <div className="flex gap-4 mt-auto pt-8">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="rounded-full h-14 w-14 shrink-0 border-2"
+                onClick={handleBack}
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </Button>
+              <Button 
+                className="flex-1 rounded-full h-14 text-lg font-bold uppercase tracking-wide"
+                onClick={handleNext}
+              >
+                Submit Application
+              </Button>
+            </div>
           </div>
         );
       default:
@@ -141,41 +144,26 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Stepper Header */}
-      <div className="border-b bg-card">
-        <div className="container mx-auto py-4">
-          <div className="flex items-center justify-center md:justify-between">
-            <div className="hidden md:block">
-              <h1 className="text-xl font-bold">Application Process</h1>
-              <p className="text-sm text-muted-foreground">Complete all steps to apply</p>
-            </div>
-            
-            <div className="flex items-center gap-2 md:gap-4">
-              {steps.map((step, index) => (
-                <div key={step.id} className="flex items-center">
-                  <div className={`flex items-center gap-2 ${currentStep === step.id ? "text-primary" : "text-muted-foreground"}`}>
-                    <div className={`
-                      w-8 h-8 rounded-full flex items-center justify-center border-2 text-sm font-medium
-                      ${currentStep === step.id ? "border-primary bg-primary/10" : 
-                        currentStep > step.id ? "border-primary bg-primary text-primary-foreground" : "border-muted"}
-                    `}>
-                      {currentStep > step.id ? <CheckCircle2 className="w-4 h-4" /> : step.id}
-                    </div>
-                    <span className="hidden sm:inline font-medium text-sm">{step.title}</span>
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className="w-8 h-[2px] bg-muted mx-2 hidden sm:block" />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-background flex flex-col max-w-md mx-auto p-6">
+      {/* Segmented Progress Bar */}
+      <div className="flex gap-2 mb-8">
+        {steps.map((step) => (
+          <div 
+            key={step.id} 
+            className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
+              currentStep >= step.id ? "bg-primary" : "bg-muted"
+            }`}
+          />
+        ))}
       </div>
 
-      {/* Main Content */}
-      <div className="py-8">
+      <div className="flex-1 flex flex-col">
+        <div className="flex justify-end mb-4">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={() => setLocation("/status")}>
+            Skip onboarding
+          </Button>
+        </div>
+        
         {renderStep()}
       </div>
     </div>

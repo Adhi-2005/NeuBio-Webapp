@@ -5,9 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginData } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Heart, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/lib/auth-context";
@@ -38,20 +37,29 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/10 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Heart className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <CardTitle className="text-3xl font-semibold">Welcome Back</CardTitle>
-            <CardDescription className="text-base mt-2">
-              Sign in to continue your hearing journey
-            </CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
+    <div className="min-h-screen relative flex flex-col">
+      {/* Background Image Placeholder */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="BackgroundLogin.png" 
+          alt="Background" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      <div className="relative z-10 flex-1 flex flex-col justify-end p-6 pb-12">
+        <div className="mb-8">
+          <h1 className="text-5xl font-black text-white uppercase leading-none tracking-tight mb-4">
+            Leave<br />Memory<br />Lapses<br />Behind<br />For Good
+          </h1>
+          <p className="text-white/80 font-medium">
+            By continuing, you agree to our Terms and Privacy :)
+          </p>
+        </div>
+
+        <div className="bg-background/95 backdrop-blur-sm p-6 rounded-3xl shadow-2xl">
+          <h2 className="text-2xl font-bold mb-6 text-center uppercase">Welcome Back</h2>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -59,11 +67,11 @@ export default function Login() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="your.email@example.com"
+                        placeholder="Email"
+                        className="h-12 rounded-xl bg-muted/50 border-0"
                         data-testid="input-email"
                         {...field}
                       />
@@ -78,11 +86,11 @@ export default function Login() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="••••••••"
+                        placeholder="Password"
+                        className="h-12 rounded-xl bg-muted/50 border-0"
                         data-testid="input-password"
                         {...field}
                       />
@@ -94,40 +102,38 @@ export default function Login() {
 
               <div className="text-right">
                 <Link href="/forgot-password">
-                  <a className="text-sm text-primary hover:underline" data-testid="link-forgot-password">
+                  <a className="text-sm text-muted-foreground hover:text-foreground font-medium" data-testid="link-forgot-password">
                     Forgot password?
                   </a>
                 </Link>
               </div>
 
               {error && (
-                <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+                <div className="p-3 rounded-lg bg-destructive/10 text-destructive text-sm font-medium text-center">
                   {error}
                 </div>
               )}
 
               <Button
                 type="submit"
-                className="w-full h-12"
+                className="w-full h-14 rounded-full text-lg font-bold uppercase tracking-wide"
                 disabled={form.formState.isSubmitting}
                 data-testid="button-login"
               >
                 {form.formState.isSubmitting ? "Signing In..." : "Sign In"}
-                <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
 
-              <div className="text-center text-sm">
-                <span className="text-muted-foreground">Don't have an account? </span>
+              <div className="text-center">
                 <Link href="/register">
-                  <a className="text-primary font-medium hover:underline" data-testid="link-register">
+                  <Button variant="secondary" className="w-full h-14 rounded-full text-lg font-bold uppercase tracking-wide bg-muted text-foreground hover:bg-muted/80">
                     Create Account
-                  </a>
+                  </Button>
                 </Link>
               </div>
             </form>
           </Form>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

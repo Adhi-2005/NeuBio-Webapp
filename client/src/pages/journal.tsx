@@ -140,9 +140,9 @@ export default function Journal() {
   if (!onboardingData) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="max-w-md">
+        <Card className="max-w-md rounded-3xl">
           <CardHeader>
-            <CardTitle>Complete Your Onboarding</CardTitle>
+            <CardTitle className="text-2xl font-black uppercase tracking-tight">Complete Your Onboarding</CardTitle>
             <CardDescription>
               Please complete the onboarding process to access your journal.
             </CardDescription>
@@ -161,15 +161,15 @@ export default function Journal() {
 
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Your Milestones</h2>
-            <Button onClick={() => setAppointmentModalOpen(true)} data-testid="button-register-appointment">
+            <h2 className="text-2xl font-black uppercase tracking-tight">Your Milestones</h2>
+            <Button onClick={() => setAppointmentModalOpen(true)} data-testid="button-register-appointment" className="rounded-full font-bold uppercase tracking-wide">
               <Plus className="w-4 h-4 mr-2" />
               Register Appointment
             </Button>
           </div>
 
           {appointmentsLoading ? (
-            <Skeleton className="h-96 w-full rounded-lg" />
+            <Skeleton className="h-96 w-full rounded-3xl" />
           ) : (
             <MilestoneCalendar
               surgeryDate={onboardingData.onboarding.surgeryDate || undefined}
@@ -180,19 +180,19 @@ export default function Journal() {
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold">Surveys & Feedback</h2>
+          <h2 className="text-2xl font-black uppercase tracking-tight">Surveys & Feedback</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {surveys.map((survey) => (
-              <Card key={survey.id} className="hover-elevate cursor-pointer transition-all" data-testid={`card-survey-${survey.id}`}>
+              <Card key={survey.id} className="hover-elevate cursor-pointer transition-all rounded-3xl border-2 hover:border-primary/20" data-testid={`card-survey-${survey.id}`}>
                 <CardHeader>
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-2">
-                    <survey.icon className={`w-5 h-5 ${survey.color}`} />
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+                    <survey.icon className={`w-6 h-6 ${survey.color}`} />
                   </div>
-                  <CardTitle className="text-lg">{survey.title}</CardTitle>
+                  <CardTitle className="text-lg font-bold uppercase tracking-wide">{survey.title}</CardTitle>
                   <CardDescription>{survey.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="ghost" className="w-full justify-between" data-testid={`button-survey-${survey.id}`}>
+                  <Button variant="ghost" className="w-full justify-between rounded-full font-bold uppercase tracking-wide" data-testid={`button-survey-${survey.id}`}>
                     Start Survey
                     <ExternalLink className="w-4 h-4" />
                   </Button>
@@ -203,17 +203,17 @@ export default function Journal() {
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold">Daily Tips & Care</h2>
+          <h2 className="text-2xl font-black uppercase tracking-tight">Daily Tips & Care</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {tips.map((tip, index) => (
-              <Card key={index} data-testid={`card-tip-${index}`}>
+              <Card key={index} data-testid={`card-tip-${index}`} className="rounded-3xl border-2">
                 <CardHeader>
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <tip.icon className="w-5 h-5 text-primary" />
+                    <div className="w-12 h-12 rounded-full bg-chart-2/20 flex items-center justify-center flex-shrink-0">
+                      <tip.icon className="w-6 h-6 text-chart-2" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg">{tip.title}</CardTitle>
+                      <CardTitle className="text-lg font-bold uppercase tracking-wide">{tip.title}</CardTitle>
                       <CardDescription className="mt-2 leading-relaxed">
                         {tip.description}
                       </CardDescription>

@@ -14,8 +14,8 @@ export default function Device() {
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex items-center justify-center rounded-lg">
             <Card className="max-w-md mx-4">
               <CardHeader className="text-center space-y-4">
-                <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Bluetooth className="w-8 h-8 text-primary" />
+                <div className="mx-auto w-16 h-16 rounded-full bg-chart-2/20 flex items-center justify-center">
+                  <Bluetooth className="w-8 h-8 text-chart-2" />
                 </div>
                 <div>
                   <Badge className="mb-4">Coming Soon</Badge>

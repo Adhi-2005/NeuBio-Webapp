@@ -21,8 +21,8 @@ export function Navbar() {
           <div className="flex items-center gap-8">
             <Link href="/status">
               <a className="flex items-center gap-2 font-semibold text-lg hover-elevate px-2 py-1 rounded-lg" data-testid="link-logo">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-primary" />
+                <div className="w-8 h-8 rounded-lg bg-chart-1/20 flex items-center justify-center">
+                  <Heart className="w-5 h-5 text-chart-1" />
                 </div>
                 <span className="hidden sm:inline">HearTrack</span>
               </a>

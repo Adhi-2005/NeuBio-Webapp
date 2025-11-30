@@ -180,7 +180,7 @@ export default function Milestones() {
           {selectedDateMilestones.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold flex items-center gap-2">
-                <Star className="w-5 h-5 text-yellow-500" />
+                <Star className="w-5 h-5 text-chart-5" />
                 Milestones
               </h3>
               {selectedDateMilestones.map(milestone => (
@@ -191,7 +191,7 @@ export default function Milestones() {
                         <h4 className="font-bold">{milestone.title}</h4>
                         <p className="text-sm text-muted-foreground">{milestone.notes}</p>
                       </div>
-                      <div className="bg-primary/10 text-primary px-3 py-1 rounded-full font-bold">
+                      <div className="bg-chart-1/20 text-chart-1 px-3 py-1 rounded-full font-bold">
                         {milestone.score}/10
                       </div>
                     </div>
@@ -205,7 +205,7 @@ export default function Milestones() {
           {selectedDateMedia.length > 0 && (
             <div className="space-y-4">
               <h3 className="text-lg font-semibold flex items-center gap-2">
-                <ImageIcon className="w-5 h-5 text-blue-500" />
+                <ImageIcon className="w-5 h-5 text-chart-2" />
                 Photos & Videos
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">

@@ -3,20 +3,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertQuestionnaireResponseSchema, type InsertQuestionnaireResponse } from "@shared/schema";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Save, ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const questions = [
   {
     id: "q1_education",
-    en: "1. What is the highest level of education completed by the mother and father?",
-    ar: "١. ما هو أعلى مستوى تعليمي أكمله كلٌّ من الأم والأب؟",
+    en: "What is the highest level of education completed by the mother and father?",
+    ar: "ما هو أعلى مستوى تعليمي أكمله كلٌّ من الأم والأب؟",
     options: [
       { value: "primary", en: "Primary School", ar: "ابتدائية" },
       { value: "middle", en: "Middle School", ar: "متوسطة" },
@@ -29,8 +27,8 @@ const questions = [
   },
   {
     id: "q2_work",
-    en: "2. What kind of work do you do?",
-    ar: "٢. ما هو نوع العمل الذي تقومون به؟",
+    en: "What kind of work do you do?",
+    ar: "ما هو نوع العمل الذي تقومون به؟",
     options: [
       { value: "full_time", en: "Full-time", ar: "دوام كامل" },
       { value: "part_time", en: "Part-time", ar: "دوام جزئي" },
@@ -42,8 +40,8 @@ const questions = [
   },
   {
     id: "q3_hobbies",
-    en: "3. What are your hobbies or activities you enjoy in your free time?",
-    ar: "٣. ما هي هواياتكم أو الأنشطة التي تستمتعون بها في وقت الفراغ؟",
+    en: "What are your hobbies or activities you enjoy in your free time?",
+    ar: "ما هي هواياتكم أو الأنشطة التي تستمتعون بها في وقت الفراغ؟",
     options: [
       { value: "sports", en: "Sports", ar: "رياضة" },
       { value: "reading", en: "Reading", ar: "قراءة" },
@@ -55,8 +53,8 @@ const questions = [
   },
   {
     id: "q4_siblings",
-    en: "4. Do your other children attend school regularly? How are they performing?",
-    ar: "٤. هل يحضر إخوة الطفل المدرسة بانتظام؟ وكيف هو أداؤهم؟",
+    en: "Do your other children attend school regularly? How are they performing?",
+    ar: "هل يحضر إخوة الطفل المدرسة بانتظام؟ وكيف هو أداؤهم؟",
     options: [
       { value: "yes_well", en: "Yes, performing well", ar: "نعم، أداؤهم جيد" },
       { value: "yes_average", en: "Yes, average performance", ar: "نعم، أداؤهم متوسط" },
@@ -66,8 +64,8 @@ const questions = [
   },
   {
     id: "q5_importance",
-    en: "5. Why do you believe hearing and communication are important for your child’s future?",
-    ar: "٥. لماذا تعتقدون أن السمع والتواصل مهمّان لمستقبل طفلكم؟",
+    en: "Why do you believe hearing and communication are important for your child’s future?",
+    ar: "لماذا تعتقدون أن السمع والتواصل مهمّان لمستقبل طفلكم؟",
     options: [
       { value: "development", en: "Essential for development", ar: "ضروري للتطور" },
       { value: "social", en: "Important for social life", ar: "مهم للحياة الاجتماعية" },
@@ -77,8 +75,8 @@ const questions = [
   },
   {
     id: "q6_expectations",
-    en: "6. How do you imagine your child’s life changing after receiving the cochlear implant?",
-    ar: "٦. كيف تتخيّلون حياة طفلكم بعد حصوله على زراعة القوقعة؟",
+    en: "How do you imagine your child’s life changing after receiving the cochlear implant?",
+    ar: "كيف تتخيّلون حياة طفلكم بعد حصوله على زراعة القوقعة؟",
     options: [
       { value: "life_changing", en: "Life-changing improvement", ar: "تحسن جذري في الحياة" },
       { value: "moderate", en: "Moderate improvement", ar: "تحسن متوسط" },
@@ -88,8 +86,8 @@ const questions = [
   },
   {
     id: "q7_commitment_medical",
-    en: "7. Are you prepared to bring your child regularly for follow-ups?",
-    ar: "٧. هل أنتم مستعدّون لإحضار طفلكم بانتظام للمراجعات؟",
+    en: "Are you prepared to bring your child regularly for follow-ups?",
+    ar: "هل أنتم مستعدّون لإحضار طفلكم بانتظام للمراجعات؟",
     options: [
       { value: "fully_prepared", en: "Yes, fully prepared", ar: "نعم، مستعد تماماً" },
       { value: "with_help", en: "Yes, with some help", ar: "نعم، بمساعدة البعض" },
@@ -98,8 +96,8 @@ const questions = [
   },
   {
     id: "q8_education_support",
-    en: "8. What is your approach to your child’s education?",
-    ar: "٨. ما هو أسلوبكم في دعم تعليم طفلكم؟",
+    en: "What is your approach to your child’s education?",
+    ar: "ما هو أسلوبكم في دعم تعليم طفلكم؟",
     options: [
       { value: "personal", en: "Personal support at home", ar: "دعم شخصي في المنزل" },
       { value: "tutor", en: "Private tutor", ar: "مدرس خصوصي" },
@@ -109,8 +107,8 @@ const questions = [
   },
   {
     id: "q9_caregiver",
-    en: "9. Who will be primarily responsible for the child's care?",
-    ar: "٩. من سيكون المسؤول الأساسي عن رعاية الطفل؟",
+    en: "Who will be primarily responsible for the child's care?",
+    ar: "من سيكون المسؤول الأساسي عن رعاية الطفل؟",
     options: [
       { value: "mother", en: "Mother", ar: "الأم" },
       { value: "father", en: "Father", ar: "الأب" },
@@ -121,8 +119,8 @@ const questions = [
   },
   {
     id: "q10_challenges",
-    en: "10. Have you faced any challenges in the past with attending medical appointments?",
-    ar: "١٠. هل واجهتم أي صعوبات سابقًا في الالتزام بالمواعيد الطبية؟",
+    en: "Have you faced any challenges in the past with attending medical appointments?",
+    ar: "هل واجهتم أي صعوبات سابقًا في الالتزام بالمواعيد الطبية؟",
     options: [
       { value: "none", en: "No challenges", ar: "لا توجد تحديات" },
       { value: "financial", en: "Financial", ar: "مادية" },
@@ -133,8 +131,8 @@ const questions = [
   },
   {
     id: "q11_instruction_readiness",
-    en: "11. Are you prepared to follow the instructions given by the doctor?",
-    ar: "١١. هل أنتم مستعدّون للالتزام بالإرشادات المقدّمة من الطبيب؟",
+    en: "Are you prepared to follow the instructions given by the doctor?",
+    ar: "هل أنتم مستعدّون للالتزام بالإرشادات المقدّمة من الطبيب؟",
     options: [
       { value: "yes_absolutely", en: "Yes, absolutely", ar: "نعم، بالتأكيد" },
       { value: "yes_guidance", en: "Yes, but need guidance", ar: "نعم، ولكن أحتاج توجيه" },
@@ -143,8 +141,8 @@ const questions = [
   },
   {
     id: "q12_commitment_level",
-    en: "12. How committed are you to following these instructions?",
-    ar: "١٢. ما مدى التزامكم باتباع هذه الإرشادات؟",
+    en: "How committed are you to following these instructions?",
+    ar: "ما مدى التزامكم باتباع هذه الإرشادات؟",
     options: [
       { value: "very_high", en: "Very High", ar: "عالي جداً" },
       { value: "high", en: "High", ar: "عالي" },
@@ -178,20 +176,6 @@ export default function Questionnaire({ onNext }: { onNext?: () => void }) {
     },
     mode: "onChange", // Enable validation on change
   });
-
-  // Calculate progress based on filled fields
-  const watchedValues = form.watch();
-  const filledCount = Object.values(watchedValues).filter(v => v && v.toString().trim() !== "").length;
-  const progress = Math.round((filledCount / questions.length) * 100);
-
-  const onSaveDraft = async () => {
-    const data = form.getValues();
-    console.log("Draft Data:", data);
-    toast({
-      title: "Draft Saved",
-      description: "Your answers have been saved. You can continue later.",
-    });
-  };
 
   const handleNext = async () => {
     const currentQuestionId = questions[currentQuestionIndex].id as keyof InsertQuestionnaireResponse;
@@ -238,66 +222,58 @@ export default function Questionnaire({ onNext }: { onNext?: () => void }) {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="container mx-auto p-4 max-w-3xl">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Parent Readiness Questionnaire</h1>
-        <div className="flex items-center space-x-2">
-          <Label htmlFor="lang-toggle" className="font-medium">
-            {lang === "en" ? "English" : "العربية"}
-          </Label>
-          <Switch
-            id="lang-toggle"
-            checked={lang === "ar"}
-            onCheckedChange={(checked) => setLang(checked ? "ar" : "en")}
-          />
+    <div className="flex flex-col h-full justify-between">
+      <div className="space-y-6 mt-4">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-1">
+            {questions.map((_, idx) => (
+              <div 
+                key={idx} 
+                className={`h-1 w-4 rounded-full transition-colors ${
+                  idx <= currentQuestionIndex ? "bg-primary" : "bg-muted"
+                }`}
+              />
+            ))}
+          </div>
+          <div className="flex items-center space-x-2">
+            <Label htmlFor="lang-toggle" className="text-xs font-bold uppercase">
+              {lang === "en" ? "EN" : "AR"}
+            </Label>
+            <Switch
+              id="lang-toggle"
+              checked={lang === "ar"}
+              onCheckedChange={(checked) => setLang(checked ? "ar" : "en")}
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="mb-6 space-y-2">
-        <div className="flex justify-between text-sm text-muted-foreground">
-          <span>Question {currentQuestionIndex + 1} of {questions.length}</span>
-          <span>{progress}% Completed</span>
-        </div>
-        <Progress value={progress} className="h-2" />
-      </div>
+        <div className="space-y-8">
+          <h1 className="text-3xl font-black uppercase tracking-tight leading-tight">
+            {lang === "en" ? currentQuestion.en.toUpperCase() : currentQuestion.ar}
+          </h1>
 
-      <Card className="min-h-[400px] flex flex-col">
-        <CardHeader>
-          <CardTitle>{lang === "en" ? "Questionnaire" : "الاستبيان"}</CardTitle>
-          <CardDescription>
-            {lang === "en" 
-              ? "Please answer the following questions to help us understand your background and readiness."
-              : "يرجى الإجابة على الأسئلة التالية لمساعدتنا في فهم خلفيتكم واستعدادكم."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex-grow">
           <Form {...form}>
-            <form className="space-y-8">
+            <form className="space-y-4">
               <FormField
                 key={currentQuestion.id}
                 control={form.control}
                 name={currentQuestion.id as keyof InsertQuestionnaireResponse}
                 render={({ field }) => (
-                  <FormItem className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
-                    <FormLabel className="text-lg font-medium leading-relaxed block">
-                      <span className="block mb-2 text-primary">{lang === "en" ? currentQuestion.en : currentQuestion.ar}</span>
-                      {lang !== "en" && <span className="block text-sm text-muted-foreground">{currentQuestion.en}</span>}
-                      {lang === "en" && <span className="block text-sm text-muted-foreground text-right" dir="rtl">{currentQuestion.ar}</span>}
-                    </FormLabel>
+                  <FormItem className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value?.toString()}
-                        className="flex flex-col space-y-3 mt-4"
+                        className="flex flex-col space-y-3"
                         dir={lang === "ar" ? "rtl" : "ltr"}
                       >
                         {currentQuestion.options.map((option) => (
-                          <FormItem key={option.value} className="flex items-center space-x-3 space-y-0 rounded-md border p-4 hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
+                          <FormItem key={option.value} className="space-y-0">
                             <FormControl>
-                              <RadioGroupItem value={option.value} />
+                              <RadioGroupItem value={option.value} className="peer sr-only" />
                             </FormControl>
-                            <FormLabel className="font-normal flex-grow cursor-pointer">
-                              <span className="block text-base">{lang === "en" ? option.en : option.ar}</span>
+                            <FormLabel className="flex items-center justify-center w-full p-4 rounded-full bg-muted text-muted-foreground font-bold uppercase tracking-wide cursor-pointer transition-all peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground hover:bg-muted/80">
+                              {lang === "en" ? option.en : option.ar}
                             </FormLabel>
                           </FormItem>
                         ))}
@@ -309,46 +285,37 @@ export default function Questionnaire({ onNext }: { onNext?: () => void }) {
               />
             </form>
           </Form>
-        </CardContent>
-        <CardFooter className="flex flex-col-reverse sm:flex-row justify-between gap-4 border-t pt-6">
-          <Button 
-            type="button" 
-            variant="outline" 
-            onClick={handlePrevious} 
-            disabled={currentQuestionIndex === 0}
-            className="w-full sm:w-auto"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            {lang === "en" ? "Previous" : "السابق"}
-          </Button>
+        </div>
+      </div>
 
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-            <Button type="button" variant="ghost" onClick={onSaveDraft} className="w-full sm:w-auto order-2 sm:order-1">
-              <Save className="w-4 h-4 mr-2" />
-              {lang === "en" ? "Save Draft" : "حفظ المسودة"}
-            </Button>
-            
-            <Button 
-              type="button" 
-              onClick={handleNext}
-              disabled={isSubmitting}
-              className="w-full sm:w-auto order-1 sm:order-2"
-            >
-              {currentQuestionIndex === questions.length - 1 ? (
-                <>
-                  {lang === "en" ? "Submit" : "إرسال"}
-                  {isSubmitting && "..."}
-                </>
-              ) : (
-                <>
-                  {lang === "en" ? "Next" : "التالي"}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </>
-              )}
-            </Button>
-          </div>
-        </CardFooter>
-      </Card>
+      <div className="flex gap-4 mt-auto pt-8 pb-4">
+        <Button 
+          variant="outline" 
+          size="icon" 
+          className="rounded-full h-14 w-14 shrink-0 border-2"
+          onClick={handlePrevious} 
+          disabled={currentQuestionIndex === 0}
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </Button>
+        
+        <Button 
+          className="flex-1 rounded-full h-14 text-lg font-bold uppercase tracking-wide"
+          onClick={handleNext}
+          disabled={isSubmitting}
+        >
+          {currentQuestionIndex === questions.length - 1 ? (
+            <>
+              {lang === "en" ? "Submit" : "إرسال"}
+              {isSubmitting && "..."}
+            </>
+          ) : (
+            <>
+              {lang === "en" ? "Next" : "التالي"}
+            </>
+          )}
+        </Button>
+      </div>
     </div>
   );
 }
