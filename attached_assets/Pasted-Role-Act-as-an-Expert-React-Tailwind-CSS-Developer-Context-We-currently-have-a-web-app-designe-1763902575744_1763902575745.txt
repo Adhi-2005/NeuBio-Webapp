@@ -1,0 +1,97 @@
+Role
+
+Act as an Expert React & Tailwind CSS Developer.
+
+Context
+
+We currently have a web app designed for a "Gen 2" Bluetooth hearing aid. However, the Gen 2 hardware is not yet released. We need to pivot the application to focus on a "Hearing Journal" for existing "Gen 1" users (who use a non-electronic implant with an external processor).
+
+Task
+
+Refactor the existing application to prioritize the "Hearing Journal" features described below. The existing "Gen 2" features (Bluetooth, battery, frequency modes) must be moved to a secondary view and marked as "Coming Soon" or disabled.
+
+Global State & Navigation
+
+Authentication Flow:
+
+Register: Fields: First Name, Second Name, Email, Password, Retype Password.
+
+New Optional Field: Guardian Name, Guardian Phone Number.
+
+Login: Email and Password.
+
+Forgot Password: Link to enter email -> simulates sending a reset link.
+
+Onboarding (Post-Registration):
+
+Ask: "Do you currently use our Product?" (Yes / Want to use).
+
+If Yes:
+
+Input 1: Date of Implant Surgery.
+
+Input 2: Date of Activation (The day they switched on the Gen 1 processor and started hearing).
+
+Main Navigation:
+
+Home/Journal (Default): The new features described below.
+
+Device/Gen 2: The old features (Bluetooth/Battery). This page should be accessible but show a "Gen 2 Hardware Coming Soon" overlay or state, preventing interaction with the controls.
+
+Feature: Hearing Journal (The Dashboard)
+
+This is the main landing page after login.
+
+1. The "Hearing Age" Counter:
+
+Display a prominent circular visual at the top.
+
+Logic: Calculate (Current Date - Date of Activation).
+
+Display: "Day X of your Hearing Journey" (e.g., "Day 35").
+
+2. The Milestone Calendar:
+
+Display a calendar component below the counter.
+
+Visual Markers: Automatically mark the "Date of Surgery" and "Date of Activation" on the calendar.
+
+Appointments: Users can click a button "Register Appointment".
+
+Opens a Modal/Dialog.
+
+Fields: Date of Visit, Doctor Name/Notes.
+
+Upload: "Upload Audiogram" (Image upload).
+
+UI Feedback: If an image is uploaded, show a success message: "Audiogram uploaded for AI Refinement."
+
+Once submitted, mark this appointment date on the calendar.
+
+3. Survey Section:
+
+Below the calendar, display a grid of "cards" or "boxes".
+
+These are links to external surveys (e.g., "Month 1 Feedback", "Device Comfort Survey").
+
+4. Suggestions & Tips:
+
+At the bottom, show a "Daily Tips" or "Care Suggestions" section.
+
+Example content: "Measures to take at the beginning of your hearing journey," "How to clean your processor," etc.
+
+Technical Requirements
+
+Use React for the framework.
+
+Use Tailwind CSS for styling (make it look clean, medical, and trustworthy).
+
+Use Lucide-React for icons (Calendar, Upload, User, Heart).
+
+Mock the backend calls (console.log data) but structure the forms to handle real data types.
+
+Ensure the design is mobile-responsive.
+
+Summary of Change
+
+Move the current "Gen 2" dashboard to a /device route and lock it. Build the /journal route as the new Home. Implement the auth flow and onboarding data collection (dates) as prerequisites to entering the Journal.
